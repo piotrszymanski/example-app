@@ -11,7 +11,7 @@ pipeline {
         APP_NAME = 'example-app'
         APP_HOSTNAME = "${env.APP_NAME}.webclient-docker.cphdev.deltek.com"
         IMAGE_REPOSITORY = "temporary"
-        IMAGE_NAME = "${env.IMAGE_REPOSITORY}.artifactory.cphdev.deltek.com/mobile-test-app:${env.APP_NAME}-${env.P4_CHANGELIST}"
+        IMAGE_NAME = "${env.IMAGE_REPOSITORY}.artifactory.cphdev.deltek.com/mobile-test-app:${env.APP_NAME}-${env.GIT_COMMIT.substring(0,7)}"
     }
 
     stages {
