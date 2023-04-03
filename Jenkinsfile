@@ -14,7 +14,7 @@ pipeline {
         stage('Build environment') {
             agent {
                 docker { 
-                    image 'maconomy-dev.artifactory.cphdev.deltek.com/webclient-env:node_18-613922'
+                    image 'maconomy-dev.artifactory.cphdev.deltek.com/webclient-build-env:node_18-613940'
                     label 'iaccess-builder'
                     args '-e HOME=${WORKSPACE}'
                     reuseNode true
