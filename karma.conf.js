@@ -32,6 +32,13 @@ module.exports = function (config) {
         { type: 'text-summary' }
       ]
     },
+    // Define a "ChromeHeadlessCI" browser which will be used when running from Jenkins.
+    customLaunchers: {
+      ChromeHeadlessCI: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox']
+      }
+    },
     reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,
