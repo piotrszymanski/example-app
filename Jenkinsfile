@@ -68,8 +68,6 @@ pipeline {
             }
 
             steps {
-                sh "envsubst < docker-compose.yml > docker-compose.prod.yml"
-                sh "cat docker-compose.prod.yml"
                 sh "docker stack deploy -c docker-compose.yml ${APP_NAME}"
             }
         }
