@@ -21,21 +21,23 @@ pipeline {
                 }
             }
 
-            stage('Install') {
-                steps {
-                    sh 'npm install'
+            stages {
+                stage('Install') {
+                    steps {
+                        sh 'npm install'
+                    }
                 }
-            }
 
-            stage('Test app') {
-                steps {
-                    sh 'npx ng test --watch=false --browsers ChromeHeadlessCI'
+                stage('Test app') {
+                    steps {
+                        sh 'npx ng test --watch=false --browsers ChromeHeadlessCI'
+                    }
                 }
-            }
 
-            stage('Build app') {
-                steps {
-                    sh 'npx ng build --configuration production --output-path dist/'
+                stage('Build app') {
+                    steps {
+                        sh 'npx ng build --configuration production --output-path dist/'
+                    }
                 }
             }
         }
