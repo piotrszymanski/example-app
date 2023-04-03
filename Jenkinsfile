@@ -1,10 +1,6 @@
 pipeline {
     agent {
-        docker { 
-            image 'maconomy-dev.artifactory.cphdev.deltek.com/webclient-env:node_18-613922'
-            label 'iaccess-builder'
-            args '-e HOME=${WORKSPACE}'
-        }
+        label 'iaccess-builder'
     }
 
     environment {
@@ -15,21 +11,32 @@ pipeline {
     }
 
     stages {
-        stage('Install') {
-            steps {
-                sh 'npm install'
+        stage('Build environment') {
+            agent {
+                docker { 
+                    image 'maconomy-dev.artifactory.cphdev.deltek.com/webclient-env:node_18-613922'
+                    label 'iaccess-builder'
+                    args '-e HOME=${WORKSPACE}'
+                    reuseNode true
+                }
             }
-        }
 
-        stage('Test app') {
-            steps {
-                sh 'npx ng test --watch=false --browsers ChromeHeadlessCI'
+            stage('Install') {
+                steps {
+                    sh 'npm install'
+                }
             }
-        }
 
-        stage('Build app') {
-            steps {
-                sh 'npx ng build --configuration production --output-path dist/'
+            stage('Test app') {
+                steps {
+                    sh 'npx ng test --watch=false --browsers ChromeHeadlessCI'
+                }
+            }
+
+            stage('Build app') {
+                steps {
+                    sh 'npx ng build --configuration production --output-path dist/'
+                }
             }
         }
 
