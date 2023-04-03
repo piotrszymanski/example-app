@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  webserver:
+    image: ${IMAGE_NAME}
+    networks:
+      - traefik
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.services.${APP_NAME}-web.loadbalancer.server.port=80"
+        - "traefik.http.services.${APP_NAME}-web.loadbalancer.passHostHeader=false"
+        - "traefik.http.routers.${APP_NAME}-web.rule=Host(`${APP_HOSTNAME}`)"
+        - "traefik.http.routers.${APP_NAME}-web.entrypoints=web"
+        - "traefik.http.routers.${APP_NAME}-web-tls.rule=Host(`${APP_HOSTNAME}`)"
+        - "traefik.http.routers.${APP_NAME}-web-tls.entrypoints=websecure"
+        - "traefik.http.routers.${APP_NAME}-web-tls.tls=true"
+
+networks:
+  traefik:
+    external: true
+  internal: {}
