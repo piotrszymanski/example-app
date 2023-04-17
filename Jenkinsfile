@@ -81,8 +81,7 @@ pipeline {
             // Send out status emails
             step([$class: 'Mailer',
                 notifyEveryUnstableBuild: true,
-                recipients: "PiotrSzymanski@deltek.com",
-                sendToIndividuals: true])
+                recipients: emailextrecipients([[$class: 'CulpritsRecipientProvider'], [$class: 'RequesterRecipientProvider']])])
         }
     }
 }
